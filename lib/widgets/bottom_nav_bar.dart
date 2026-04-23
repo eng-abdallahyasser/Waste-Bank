@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,31 +16,41 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    return Container(
-      width: screenWidth,
-      height: 88,
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.9),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
-            offset: const Offset(0, -8),
-            blurRadius: 32,
-          ),
-        ],
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(24),
+        topRight: Radius.circular(24),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _buildNavItem(0, 'assets/icons/categroy.svg', 'الرئيسية'),
-          _buildNavItem(1, 'assets/icons/market.svg', 'سوق'),
-          _buildNavItem(2, 'assets/icons/truck.svg', 'طلباتي'),
-          _buildNavItem(3, 'assets/icons/message.svg', 'محادثة'),
-        ],
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+        child: Container(
+          width: screenWidth,
+          height: 92,
+          padding: const EdgeInsets.only(bottom: 12),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.9),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.06),
+                offset: const Offset(0, -8),
+                blurRadius: 32,
+              ),
+            ],
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildNavItem(0, 'assets/icons/categroy.svg', 'الرئيسية'),
+              _buildNavItem(1, 'assets/icons/market.svg', 'سوق'),
+              _buildNavItem(2, 'assets/icons/truck.svg', 'طلباتي'),
+              _buildNavItem(3, 'assets/icons/message.svg', 'محادثة'),
+            ],
+          ),
+        ),
       ),
     );
   }

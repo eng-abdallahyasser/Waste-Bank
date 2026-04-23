@@ -82,7 +82,7 @@ class _BindingWrapperState extends State<BindingWrapper> {
   @override
   void initState() {
     super.initState();
-    widget.binding.dependencies(); // 👈 loads DI on first build
+    widget.binding.dependencies(); 
   }
 
   @override
