@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_instance/src/bindings_interface.dart';
-import 'package:waste_bank/features/chat/binding.dart';
-import 'package:waste_bank/features/chat/page.dart';
+import 'package:waste_bank/features/support/binding.dart';
+import 'package:waste_bank/features/support/page.dart';
 import 'package:waste_bank/features/home/binding.dart';
 import 'package:waste_bank/features/home/page.dart';
 import 'package:waste_bank/features/market/binding.dart';
@@ -46,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
                 BindingWrapper(binding: HomeBinding(), child: const HomePage()),
                 BindingWrapper(binding: MarketBinding(), child: const MarketPage()),
                 BindingWrapper(binding: OrdersBinding(), child: const OrdersPage()),
-                BindingWrapper(binding: ChatBinding(), child: const ChatPage()),
+                BindingWrapper(binding: SupportBinding(), child: const SupportPage()),
               ],
             ),
             Positioned(

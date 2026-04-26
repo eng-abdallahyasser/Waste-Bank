@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:waste_bank/widgets/top_app_bar.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'controller.dart';
@@ -32,74 +33,16 @@ class OrdersPage extends GetView<OrdersController> {
             ),
           ),
 
-          // Header
-          Positioned(
+          const Positioned(
             top: 0,
             left: 0,
             right: 0,
-            child: Column(
-              children: [
-                Container(
-                  height: topPadding,
-                  color: const Color(0xFFECFDF5).withOpacity(0.8),
-                ),
-                _buildTopAppBar(),
-              ],
-            ),
+            child: SharedTopAppBar(title: 'مكرم علي'),
           ),
         ],
       ),
       floatingActionButton: _buildFAB(),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-    );
-  }
-
-  Widget _buildTopAppBar() {
-    return ClipRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          decoration: BoxDecoration(
-            color: const Color(0xFFECFDF5).withOpacity(0.8),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Icon(Icons.notifications_none, color: Color(0xFF065F46)),
-              Expanded(
-                child: Text(
-                  'Waste Bank',
-                  textAlign: TextAlign.right,
-                  style: GoogleFonts.beVietnamPro(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 24,
-                    color: const Color(0xFF064E3B),
-                    letterSpacing: -1.2,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFC9E7F7),
-                  border: Border.all(color: const Color(0xFFA3F69C), width: 2),
-                  shape: BoxShape.circle,
-                ),
-                child: ClipOval(
-                  child: Image.network(
-                    'https://i.pravatar.cc/150?u=makram',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, color: Colors.blueGrey),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 

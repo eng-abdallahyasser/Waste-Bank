@@ -47,7 +47,7 @@ class BottomNavBar extends StatelessWidget {
               _buildNavItem(0, 'assets/icons/categroy.svg', 'الرئيسية'),
               _buildNavItem(1, 'assets/icons/market.svg', 'سوق'),
               _buildNavItem(2, 'assets/icons/truck.svg', 'طلباتي'),
-              _buildNavItem(3, 'assets/icons/message.svg', 'محادثة'),
+              _buildNavItem(3, 'assets/icons/message.svg', 'الدعم'),
             ],
           ),
         ),
