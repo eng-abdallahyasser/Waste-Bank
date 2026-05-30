@@ -340,7 +340,7 @@ class SupportPage extends GetView<SupportController> {
                 ),
               ],
               image: const DecorationImage(
-                image: NetworkImage('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80\u0026w=500'),
+                image: AssetImage('assets/images/call-center-male.jpg'),
                 fit: BoxFit.cover,
               ),
             ),

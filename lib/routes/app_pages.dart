@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:waste_bank/features/auth/binding.dart';
+import 'package:waste_bank/features/auth/login_page.dart';
+import 'package:waste_bank/features/auth/register_page.dart';
 import 'package:waste_bank/features/notifications/binding.dart';
 import 'package:waste_bank/features/notifications/page.dart';
 import 'package:waste_bank/features/profile/binding.dart';
@@ -15,7 +18,7 @@ import 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.MAIN;
+  static const INITIAL = Routes.LOGIN;
 
   static final routes = [
     GetPage(
@@ -43,6 +46,16 @@ class AppPages {
       name: Routes.NOTIFICATIONS,
       page: () => const NotificationsPage(),
       binding: NotificationsBinding(),
+    ),
+    GetPage(
+      name: Routes.LOGIN,
+      page: () => const LoginPage(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: Routes.REGISTER,
+      page: () => const RegisterPage(),
+      binding: AuthBinding(),
     ),
   ];
 }

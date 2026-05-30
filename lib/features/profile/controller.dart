@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import 'package:waste_bank/routes/app_routes.dart';
+
 class ProfileController extends GetxController {
   final userName = 'مكرم علي'.obs;
   final userLocation = 'الدقهلية، المنصورة'.obs;
@@ -20,5 +22,6 @@ class ProfileController extends GetxController {
 
   void logout() {
     // Implement logout logic
+    Get.offAllNamed(Routes.LOGIN);
   }
 }

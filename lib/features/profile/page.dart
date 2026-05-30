@@ -299,34 +299,37 @@ class ProfilePage extends GetView<ProfileController> {
   }
 
   Widget _buildLogoutButton() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFFBA1A1A).withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'تسجيل الخروج',
-            style: GoogleFonts.cairo(
-              fontWeight: FontWeight.w700,
-              fontSize: 16,
-              color: const Color(0xFFBA1A1A),
+    return GestureDetector(
+      onTap: controller.logout,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: const Color(0xFFBA1A1A).withOpacity(0.1),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'تسجيل الخروج',
+              style: GoogleFonts.cairo(
+                fontWeight: FontWeight.w700,
+                fontSize: 16,
+                color: const Color(0xFFBA1A1A),
+              ),
             ),
-          ),
-          const SizedBox(width: 16),
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+            const SizedBox(width: 16),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.logout, color: Color(0xFFBA1A1A), size: 18),
             ),
-            child: const Icon(Icons.logout, color: Color(0xFFBA1A1A), size: 18),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
