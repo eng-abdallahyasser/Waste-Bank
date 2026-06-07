@@ -63,11 +63,15 @@ class LoginPage extends GetView<AuthController> {
                 children: [
                   const SizedBox(height: 40),
                   _buildHeader(),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 28),
+                  _buildRoleSelector(),
+                  const SizedBox(height: 28),
                   _buildForm(),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 20),
                   _buildForgotPassword(),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 12),
+                  _buildErrorBanner(),
+                  const SizedBox(height: 12),
                   _buildLoginButton(),
                   const SizedBox(height: 32),
                   _buildDivider(),
@@ -130,16 +134,120 @@ class LoginPage extends GetView<AuthController> {
     );
   }
 
+  /// Login role selector: Farmer or Organization
+  Widget _buildRoleSelector() {
+    return Obx(() => Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE8F0E8),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () => controller.setLoginRole(RegistrationRole.farmer),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                decoration: BoxDecoration(
+                  color: controller.loginRole.value == RegistrationRole.farmer
+                      ? const Color(0xFF0D631B)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.agriculture_outlined,
+                      size: 20,
+                      color: controller.loginRole.value == RegistrationRole.farmer
+                          ? Colors.white
+                          : const Color(0xFF5A7A5A),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'مزارع',
+                      style: GoogleFonts.cairo(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        color: controller.loginRole.value == RegistrationRole.farmer
+                            ? Colors.white
+                            : const Color(0xFF5A7A5A),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () => controller.setLoginRole(RegistrationRole.factory),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                decoration: BoxDecoration(
+                  color: controller.loginRole.value == RegistrationRole.factory
+                      ? const Color(0xFF0D631B)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.factory_outlined,
+                      size: 20,
+                      color: controller.loginRole.value == RegistrationRole.factory
+                          ? Colors.white
+                          : const Color(0xFF5A7A5A),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'منظمة / مصنع',
+                      style: GoogleFonts.cairo(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        color: controller.loginRole.value == RegistrationRole.factory
+                            ? Colors.white
+                            : const Color(0xFF5A7A5A),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ));
+  }
+
   Widget _buildForm() {
     return Column(
       children: [
-        AuthTextField(
-          controller: controller.loginEmailController,
-          label: 'البريد الإلكتروني',
-          hint: 'example@email.com',
-          icon: Icons.email_outlined,
-          keyboardType: TextInputType.emailAddress,
-        ),
+        // Dynamic identifier field: phone for farmer, email for org
+        Obx(() {
+          if (controller.loginRole.value == RegistrationRole.farmer) {
+            return AuthTextField(
+              controller: controller.loginPhoneController,
+              label: 'رقم الهاتف',
+              hint: '01XXXXXXXXX',
+              icon: Icons.phone_outlined,
+              keyboardType: TextInputType.phone,
+            );
+          } else {
+            return AuthTextField(
+              controller: controller.loginEmailController,
+              label: 'البريد الإلكتروني',
+              hint: 'example@email.com',
+              icon: Icons.email_outlined,
+              keyboardType: TextInputType.emailAddress,
+            );
+          }
+        }),
         const SizedBox(height: 16),
         Obx(() => AuthTextField(
           controller: controller.loginPasswordController,
@@ -160,6 +268,41 @@ class LoginPage extends GetView<AuthController> {
         )),
       ],
     );
+  }
+
+  Widget _buildErrorBanner() {
+    return Obx(() {
+      final error = controller.errorMessage.value;
+      if (error == null || error.isEmpty) return const SizedBox.shrink();
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFDE8E8),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: const Color(0xFFFCA5A5)),
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.error_outline, color: Color(0xFFDC2626), size: 20),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                error,
+                style: GoogleFonts.tajawal(
+                  fontSize: 14,
+                  color: const Color(0xFF991B1B),
+                  height: 1.4,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: controller.clearError,
+              child: const Icon(Icons.close, color: Color(0xFFDC2626), size: 18),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   Widget _buildForgotPassword() {
