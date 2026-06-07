@@ -29,6 +29,8 @@ class AuthController extends GetxController {
   final registerAddressVillageController = TextEditingController();
   final registerPasswordController = TextEditingController();
   final registerConfirmPasswordController = TextEditingController();
+  final registerIndustrialRegNumberController = TextEditingController();
+  final registerFactoryOwnerNameController = TextEditingController();
 
   final isLoginPasswordVisible = false.obs;
   final isRegisterPasswordVisible = false.obs;
@@ -124,6 +126,22 @@ class AuthController extends GetxController {
       return;
     }
 
+    // Factory-specific fields are required for factories
+    if (registrationRole.value == RegistrationRole.factory) {
+      if (registerFactoryOwnerNameController.text.trim().isEmpty) {
+        errorMessage.value = 'Please enter the factory owner name.';
+        return;
+      }
+      if (registerIndustrialRegNumberController.text.trim().isEmpty) {
+        errorMessage.value = 'Please enter your industrial registration number.';
+        return;
+      }
+      if (registerAddressVillageController.text.trim().isEmpty) {
+        errorMessage.value = 'Please enter the factory address.';
+        return;
+      }
+    }
+
     // Land size is required for farmers
     if (registrationRole.value == RegistrationRole.farmer) {
       if (registerLandSizeController.text.trim().isEmpty) {
@@ -172,6 +190,9 @@ class AuthController extends GetxController {
         email: registerEmailController.text.trim(),
         phone: registerPhoneController.text.trim(),
         nationalId: registerNationalIdController.text.trim(),
+        factoryOwnerName: registerFactoryOwnerNameController.text.trim(),
+        industrialRegistrationNumber: registerIndustrialRegNumberController.text.trim(),
+        addressVillage: registerAddressVillageController.text.trim(),
         password: registerPasswordController.text,
         passwordConfirmation: registerConfirmPasswordController.text,
       );
@@ -221,6 +242,8 @@ class AuthController extends GetxController {
     registerAddressVillageController.dispose();
     registerPasswordController.dispose();
     registerConfirmPasswordController.dispose();
+    registerIndustrialRegNumberController.dispose();
+    registerFactoryOwnerNameController.dispose();
     super.onClose();
   }
 }

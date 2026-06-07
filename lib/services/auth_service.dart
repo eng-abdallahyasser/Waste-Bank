@@ -161,6 +161,9 @@ class AuthService {
     required String password,
     required String passwordConfirmation,
     required String nationalId,
+    required String factoryOwnerName,
+    required String industrialRegistrationNumber,
+    required String addressVillage,
   }) async {
     try {
       final response = await _apiClient.post(
@@ -172,6 +175,9 @@ class AuthService {
           'password': password,
           'password_confirmation': passwordConfirmation,
           'national_id': nationalId,
+          'factory_owner_name': factoryOwnerName,
+          'industrial_registration_number': industrialRegistrationNumber,
+          'address_village': addressVillage,
         },
       );
 

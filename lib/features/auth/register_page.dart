@@ -289,6 +289,46 @@ class RegisterPage extends GetView<AuthController> {
           icon: Icons.badge_outlined,
           keyboardType: TextInputType.number,
         ),
+        // Industrial registration number & factory owner name — only relevant for factories
+        Obx(() {
+          if (controller.registrationRole.value != RegistrationRole.factory) {
+            return const SizedBox.shrink();
+          }
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: AuthTextField(
+                  controller: controller.registerFactoryOwnerNameController,
+                  label: 'اسم صاحب المصنع',
+                  hint: 'أدخل اسم صاحب المصنع',
+                  icon: Icons.person_outline,
+                  keyboardType: TextInputType.text,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: AuthTextField(
+                  controller: controller.registerIndustrialRegNumberController,
+                  label: 'الرقم الصناعي',
+                  hint: 'أدخل الرقم الصناعي للمنشأة',
+                  icon: Icons.factory_outlined,
+                  keyboardType: TextInputType.text,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: AuthTextField(
+                  controller: controller.registerAddressVillageController,
+                  label: 'عنوان المصنع',
+                  hint: 'أدخل عنوان المصنع',
+                  icon: Icons.location_on_outlined,
+                  keyboardType: TextInputType.text,
+                ),
+              ),
+            ],
+          );
+        }),
         // Land size — only relevant for farmers
         Obx(() {
           if (controller.registrationRole.value != RegistrationRole.farmer) {
