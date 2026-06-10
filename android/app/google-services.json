@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "340775418699",
+    "project_id": "waste-bank-cd1bb",
+    "storage_bucket": "waste-bank-cd1bb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340775418699:android:f3d60c019fb88b654f86ce",
+        "android_client_info": {
+          "package_name": "com.example.waste_bank"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDKGRuQzNEmcAcTzjlZP3vemGpvMN1gMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
