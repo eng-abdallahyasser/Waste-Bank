@@ -1,0 +1,247 @@
+# Waste Bank - Backend API Integration Tasks
+## Base URL: https://waste-bank-update.vercel.app/api
+
+---
+
+## ✅ PHASE 1: AUTHENTICATION (COMPLETED)
+
+### 1.1 Auth Endpoints
+- [x] POST /auth/login — Farmer login (phone + password)
+- [x] POST /org/auth/login — Organization login (email + password)
+- [x] POST /auth/register — General user registration
+- [x] POST /auth/register/farmer — Farmer registration (name, email, phone, national_id, land_size, crops_type, address_village)
+- [x] POST /auth/register/factory — Factory registration (name, email, phone, national_id, factory_owner_name, industrial_registration_number, industry_type, address_village)
+- [x] POST /auth/google — Google social login
+- [x] GET /auth/profile — Get authenticated user profile
+- [x] POST /auth/logout — Logout user
+
+### 1.2 Auth Service Layer
+- [x] AuthService class with all auth methods (loginFarmer, loginOrg, register, registerFarmer, registerFactory, loginWithGoogle, getProfile, logout)
+- [x] AuthResponse model with token + user parsing
+- [x] Error handling with Either (Left for errors, Right for success)
+- [x] Token persistence via LocalStorageService (save, get, clear)
+
+### 1.3 Auth UI
+- [x] Login page with role toggle (farmer / organization)
+- [x] Register page with role toggle (farmer / factory)
+- [x] Dynamic form fields per role (land size / crops type for farmer, industry type / industrial reg number for factory)
+- [x] Validation per role
+- [x] Auto-login if token exists (main.dart)
+
+---
+
+## 📋 PHASE 2: USER MODEL & PROFILE (IN PROGRESS)
+
+### 2.1 Expand UserModel
+- [ ] Add missing fields to UserModel:
+  - email, avatar, location, land_size, crops_type (farmer-specific)
+  - factory_owner_name, industrial_registration_number, industry_type (org-specific)
+  - points, total_waste_collected, total_earnings
+- [ ] Update UserModel.fromJson() to parse all fields from API
+- [ ] Update UserModel.toJson() for local storage persistence
+
+### 2.2 Profile API Integration
+- [ ] Create ProfileService (or reuse AuthService.getProfile)
+- [ ] GET /profile — Fetch user profile data
+- [ ] PUT /profile — Update user profile fields
+- [ ] POST /profile/avatar — Upload/update avatar image
+- [ ] Handle multipart image upload for avatar
+
+### 2.3 Profile Controller Updates
+- [ ] Bind actual user data from API/storage instead of hardcoded values
+- [ ] Load real impact stats from backend (total_waste_collected, total_earnings, trees_saved)
+- [ ] Implement "Edit Profile" screen with API integration
+- [ ] Implement "Account Settings" screen with API integration
+
+---
+
+## 📋 PHASE 3: HOME DASHBOARD
+
+### 3.1 Dashboard API
+- [ ] GET /dashboard/stats — Fetch dashboard statistics (total_earnings_today, active_orders, pending_offers)
+- [ ] GET /offers — Fetch recent offers/listings
+- [ ] GET /offers/:id — Fetch single offer details
+
+### 3.2 Home Controller Updates
+- [ ] Replace hardcoded stats (earnings 450.50, active orders 12, pending offers 5) with API data
+- [ ] Replace hardcoded offer cards with API-loaded data
+- [ ] Add pull-to-refresh functionality
+- [ ] Add loading states and error handling
+
+### 3.3 Home Page Updates
+- [ ] Display dynamic user name from authenticated user
+- [ ] Wire up "إضافة طلب" (Add Request) button to create offer flow
+- [ ] Wire up "استكشاف" (Explore) button to Market page
+- [ ] Wire up offer card "تفاصيل" (Details) and "قبول" (Accept) buttons
+- [ ] Wire up FAB (+) button to create new listing/offer
+
+---
+
+## 📋 PHASE 4: MARKET / LISTINGS
+
+### 4.1 Market API
+- [ ] GET /products — Fetch product/resource listings (with pagination, search, filter params)
+- [ ] GET /products/:id — Fetch single product details
+- [ ] GET /products/categories — Fetch available categories
+- [ ] POST /products — Create a new product/resource listing (farmer/org)
+- [ ] PUT /products/:id — Update a listing
+- [ ] DELETE /products/:id — Delete a listing
+
+### 4.2 Market Controller
+- [ ] Implement search with debounce
+- [ ] Implement filter state (by type, location, date)
+- [ ] Implement pagination (infinite scroll)
+- [ ] Implement "Buy Now" / contact seller flow
+
+### 4.3 Market Page Updates
+- [ ] Replace hardcoded listing cards with data from API
+- [ ] Wire up search TextField → controller search method
+- [ ] Wire up filter buttons → controller filter methods
+- [ ] Wire up "شراء الآن" (Buy Now) button
+
+---
+
+## 📋 PHASE 5: ORDERS / SHIPMENTS
+
+### 5.1 Orders API
+- [ ] GET /orders — Fetch orders list (with status filter: pending, active, completed)
+- [ ] GET /orders/:id — Fetch single order details
+- [ ] POST /orders — Create a new shipping order
+- [ ] POST /orders/:id/bids — Submit a transport bid/offer
+- [ ] GET /orders/:id/bids — Fetch bids for an order
+- [ ] PUT /orders/:id/bids/:bid_id/accept — Accept a bid
+- [ ] PUT /orders/:id/status — Update order status (track shipment)
+
+### 5.2 Orders Controller
+- [ ] Connect tab switcher (available orders / active offers) to API
+- [ ] Load real order data with loading states
+- [ ] Implement bid submission flow
+- [ ] Implement order tracking with progress updates
+
+### 5.3 Orders Page Updates
+- [ ] Replace hardcoded shipment cards with API data
+- [ ] Wire up "تقديم عرض سعر" (Submit Price Offer) button
+- [ ] Wire up "تقديم عرض الآن" (Submit Offer Now) button
+- [ ] Wire up "تتبع الشحنة" (Track Shipment) button
+- [ ] Wire up "عرض الفاتورة" (Show Invoice) button
+- [ ] Wire up "عرض جميع العروض المستلمة" (Show All Received Offers)
+- [ ] Wire up FAB to create new order
+
+---
+
+## 📋 PHASE 6: NOTIFICATIONS
+
+### 6.1 Notifications API
+- [ ] GET /notifications — Fetch notifications list (paginated)
+- [ ] PUT /notifications/:id/read — Mark notification as read
+- [ ] PUT /notifications/read-all — Mark all notifications as read
+- [ ] POST /notifications/register-device — Register device token for push notifications
+
+### 6.2 Notifications Controller
+- [ ] Replace hardcoded notification data with API calls
+- [ ] Implement pull-to-refresh
+- [ ] Implement "mark all as read" via the checkmark icon in app bar
+- [ ] Implement infinite scroll/pagination for older notifications
+
+### 6.3 Notifications Page Updates
+- [ ] Wire up notification action buttons (قبول العرض / رفض)
+- [ ] Wire up "تم الكل" (Mark All Read) button
+- [ ] Show unread notification badge on bottom nav bar
+
+---
+
+## 📋 PHASE 7: SUPPORT
+
+### 7.1 Support API
+- [ ] GET /support/faqs — Fetch FAQ list
+- [ ] GET /support/resources — Fetch articles/resources
+- [ ] POST /support/tickets — Create a support ticket
+- [ ] GET /support/tickets — Fetch user's support tickets
+- [ ] POST /support/chat — Send a chat message (live support)
+
+### 7.2 Support Controller
+- [ ] Replace hardcoded FAQs with API data
+- [ ] Replace hardcoded resources with API data
+- [ ] Implement search functionality
+- [ ] Implement live chat connection
+
+### 7.3 Support Page Updates
+- [ ] Wire up search field
+- [ ] Wire up quick link cards
+- [ ] Wire up "ابدأ المحادثة" (Start Chat) button
+- [ ] Wire up resource cards
+
+---
+
+## 📋 PHASE 8: FORGOT PASSWORD
+
+### 8.1 Password Reset API
+- [ ] POST /auth/forgot-password — Send password reset email/SMS
+- [ ] POST /auth/reset-password — Reset password with token
+
+### 8.2 Forgot Password UI
+- [ ] Create forgot password page (phone/email input)
+- [ ] Create reset password page (new password + confirmation)
+- [ ] Wire up to API endpoints
+- [ ] Add navigation from login "نسيت كلمة المرور؟" link
+
+---
+
+## 📋 PHASE 9: GOOGLE SIGN-IN
+
+### 9.1 Google Auth Integration
+- [ ] Add google_sign_in package to pubspec.yaml
+- [ ] Configure Android (google-services.json)
+- [ ] Configure iOS (GoogleService-Info.plist)
+- [ ] Implement Google Sign-In button flow in AuthController.loginWithGoogle()
+- [ ] Handle token exchange via POST /auth/google
+
+---
+
+## 📋 PHASE 10: ERROR HANDLING & UX POLISH
+
+### 10.1 Global Error Handling
+- [ ] Add Dio interceptor for automatic token refresh (if applicable)
+- [ ] Add Dio interceptor for 401 → auto-logout
+- [ ] Create a global snackbar/toast helper for API errors
+- [ ] Add retry logic for network failures
+
+### 10.2 Loading & Empty States
+- [ ] Add shimmer/skeleton loaders for all list pages
+- [ ] Add empty state widgets (no data yet)
+- [ ] Add error state widgets (retry button)
+- [ ] Add pull-to-refresh on all data pages
+
+### 10.3 Offline Support
+- [ ] Cache last-fetched data in GetStorage
+- [ ] Show cached data when offline with "offline" indicator
+- [ ] Queue failed requests for retry when back online
+
+---
+
+## 📋 PHASE 11: TESTING & VERIFICATION
+
+### 11.1 Manual Testing Checklist
+- [ ] Test registration flow for both farmer and factory
+- [ ] Test login flow for both farmer and organization
+- [ ] Test auto-login (app restart with valid token)
+- [ ] Test logout (token cleared, redirect to login)
+- [ ] Test profile data loading
+- [ ] Test market listings with search/filter
+- [ ] Test order creation and tracking
+- [ ] Test notifications CRUD
+- [ ] Test forgot password flow
+- [ ] Test Google sign-in
+
+### 11.2 Code Quality
+- [ ] Run `flutter analyze` and fix all warnings/errors
+- [ ] Run `flutter test` and ensure all tests pass
+- [ ] Review API response error handling for all endpoints
+- [ ] Check memory leaks (dipose controllers, streams)
+
+---
+
+## ✅ LEGEND
+- [ ] = Not started / To do
+- [x] = Completed
+- [~] = In progress

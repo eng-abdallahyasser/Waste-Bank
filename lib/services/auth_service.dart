@@ -163,6 +163,7 @@ class AuthService {
     required String nationalId,
     required String factoryOwnerName,
     required String industrialRegistrationNumber,
+    required String industryType,
     required String addressVillage,
   }) async {
     try {
@@ -177,6 +178,7 @@ class AuthService {
           'national_id': nationalId,
           'factory_owner_name': factoryOwnerName,
           'industrial_registration_number': industrialRegistrationNumber,
+          'industry_type': industryType,
           'address_village': addressVillage,
         },
       );

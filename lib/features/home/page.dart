@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:waste_bank/routes/app_routes.dart';
 import 'package:waste_bank/widgets/top_app_bar.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -95,11 +96,14 @@ class HomePage extends GetView<HomeController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              _buildHeroButton(
-                text: 'إضافة طلب',
-                backgroundColor: Colors.white,
-                textColor: const Color(0xFF0D631B),
-                icon: Icons.add,
+              GestureDetector(
+                onTap: () => Get.toNamed(Routes.CREATE_OFFER),
+                child: _buildHeroButton(
+                  text: 'إضافة طلب',
+                  backgroundColor: Colors.white,
+                  textColor: const Color(0xFF0D631B),
+                  icon: Icons.add,
+                ),
               ),
               const SizedBox(width: 16),
               _buildHeroButton(
@@ -451,22 +455,25 @@ class HomePage extends GetView<HomeController> {
   }
 
   Widget _buildFAB() {
-    return Container(
-      margin: const EdgeInsets.only(bottom:70),
-      width: 64,
-      height: 64,
-      decoration: BoxDecoration(
-        color: const Color(0xFF0D631B),
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            blurRadius: 50,
-            offset: const Offset(0, 25),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => Get.toNamed(Routes.CREATE_OFFER),
+      child: Container(
+        margin: const EdgeInsets.only(bottom:70),
+        width: 64,
+        height: 64,
+        decoration: BoxDecoration(
+          color: const Color(0xFF0D631B),
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.25),
+              blurRadius: 50,
+              offset: const Offset(0, 25),
+            ),
+          ],
+        ),
+        child: const Icon(Icons.add, color: Colors.white, size: 24),
       ),
-      child: const Icon(Icons.add, color: Colors.white, size: 24),
     );
   }
 }

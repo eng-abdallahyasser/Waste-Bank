@@ -32,6 +32,26 @@ class AuthController extends GetxController {
   final registerIndustrialRegNumberController = TextEditingController();
   final registerFactoryOwnerNameController = TextEditingController();
 
+  /// Industry type dropdown state and options
+  static const List<String> industryTypes = [
+    'إعادة تدوير',
+    'صناعات غذائية',
+    'بلاستيك',
+    'معادن',
+    'صناعات كيميائية',
+    'صناعات دوائية',
+    'صناعات ورقية',
+    'صناعات خشبية',
+    'صناعات نسيجية',
+    'إلكترونيات',
+    'زجاج',
+    'مطاط',
+    'مواد بناء',
+    'صناعات زراعية',
+    'أخرى',
+  ];
+  final selectedIndustryType = ''.obs;
+
   final isLoginPasswordVisible = false.obs;
   final isRegisterPasswordVisible = false.obs;
   final isConfirmPasswordVisible = false.obs;
@@ -136,6 +156,10 @@ class AuthController extends GetxController {
         errorMessage.value = 'Please enter your industrial registration number.';
         return;
       }
+      if (selectedIndustryType.value.isEmpty) {
+        errorMessage.value = 'Please select the industry type.';
+        return;
+      }
       if (registerAddressVillageController.text.trim().isEmpty) {
         errorMessage.value = 'Please enter the factory address.';
         return;
@@ -192,6 +216,7 @@ class AuthController extends GetxController {
         nationalId: registerNationalIdController.text.trim(),
         factoryOwnerName: registerFactoryOwnerNameController.text.trim(),
         industrialRegistrationNumber: registerIndustrialRegNumberController.text.trim(),
+        industryType: selectedIndustryType.value,
         addressVillage: registerAddressVillageController.text.trim(),
         password: registerPasswordController.text,
         passwordConfirmation: registerConfirmPasswordController.text,

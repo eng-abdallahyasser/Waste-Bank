@@ -318,6 +318,10 @@ class RegisterPage extends GetView<AuthController> {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
+                child: _buildIndustryTypeDropdown(),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
                 child: AuthTextField(
                   controller: controller.registerAddressVillageController,
                   label: 'عنوان المصنع',
@@ -401,6 +405,173 @@ class RegisterPage extends GetView<AuthController> {
         )),
       ],
     );
+  }
+
+  Widget _buildIndustryTypeDropdown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          'نوع الصناعة',
+          style: GoogleFonts.cairo(
+            fontWeight: FontWeight.w700,
+            fontSize: 14,
+            color: const Color(0xFF001F2A),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Obx(() => GestureDetector(
+          onTap: () => _showIndustryTypePicker(),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.category_outlined, color: Color(0xFF2E7D32), size: 20),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    controller.selectedIndustryType.value.isEmpty
+                        ? 'اختر نوع الصناعة'
+                        : controller.selectedIndustryType.value,
+                    textAlign: TextAlign.right,
+                    style: GoogleFonts.cairo(
+                      fontSize: 15,
+                      color: controller.selectedIndustryType.value.isEmpty
+                          ? const Color(0xFF707A6C)
+                          : const Color(0xFF001F2A),
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.keyboard_arrow_down_outlined,
+                  color: const Color(0xFF2E7D32),
+                  size: 20,
+                ),
+              ],
+            ),
+          ),
+        )),
+      ],
+    );
+  }
+
+  /// Shows a bottom sheet with industry type options to pick from
+  void _showIndustryTypePicker() {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 40),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'نوع الصناعة',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.cairo(
+                fontWeight: FontWeight.w900,
+                fontSize: 20,
+                color: const Color(0xFF001F2A),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'اختر نوع الصناعة الخاصة بمنظمتك',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.tajawal(
+                fontSize: 14,
+                color: const Color(0xFF707A6C),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Divider(height: 1, color: Color(0xFFE0E8E0)),
+            const SizedBox(height: 8),
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(Get.context!).size.height * 0.5,
+              ),
+              child: ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                children: AuthController.industryTypes.map(
+                  (type) => _buildIndustryOption(type),
+                ).toList(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildIndustryOption(String type) {
+    return Obx(() => GestureDetector(
+      onTap: () {
+        controller.selectedIndustryType.value = type;
+        Get.back();
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+        margin: const EdgeInsets.symmetric(vertical: 2),
+        decoration: BoxDecoration(
+          color: controller.selectedIndustryType.value == type
+              ? const Color(0xFF0D631B).withOpacity(0.08)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 22,
+              height: 22,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: controller.selectedIndustryType.value == type
+                      ? const Color(0xFF0D631B)
+                      : const Color(0xFFBCC8B5),
+                  width: 2,
+                ),
+                color: controller.selectedIndustryType.value == type
+                    ? const Color(0xFF0D631B)
+                    : Colors.transparent,
+              ),
+              child: controller.selectedIndustryType.value == type
+                  ? const Icon(Icons.check, color: Colors.white, size: 14)
+                  : null,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              type,
+              style: GoogleFonts.cairo(
+                fontSize: 16,
+                fontWeight: controller.selectedIndustryType.value == type
+                    ? FontWeight.w700
+                    : FontWeight.w500,
+                color: const Color(0xFF001F2A),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 
   Widget _buildErrorBanner() {

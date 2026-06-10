@@ -1,11 +1,15 @@
 import 'package:get/get.dart';
-
 import 'package:waste_bank/routes/app_routes.dart';
+import 'package:waste_bank/services/local_storage_service.dart';
 
 class ProfileController extends GetxController {
+  final LocalStorageService _storage;
+
+  ProfileController(this._storage);
+
   final userName = 'مكرم علي'.obs;
   final userLocation = 'الدقهلية، المنصورة'.obs;
-  
+
   final impactStats = [
     {'label': 'النفايات المجموعة', 'value': '1250', 'unit': 'كجم'},
     {'label': 'إجمالي الأرباح', 'value': '450.5', 'unit': 'ج.م'},
@@ -20,8 +24,11 @@ class ProfileController extends GetxController {
     {'title': 'المساعدة والدعم', 'icon': 'help_outline'},
   ].obs;
 
-  void logout() {
-    // Implement logout logic
+  Future<void> logout() async {
+    // Clear stored token and user data from GetStorage
+    _storage.clearAuth();
+
+    // Navigate to login and clear all previous routes
     Get.offAllNamed(Routes.LOGIN);
   }
 }

@@ -4,6 +4,8 @@ import 'package:waste_bank/features/auth/login_page.dart';
 import 'package:waste_bank/features/auth/register_page.dart';
 import 'package:waste_bank/features/notifications/binding.dart';
 import 'package:waste_bank/features/notifications/page.dart';
+import 'package:waste_bank/features/offers/binding.dart';
+import 'package:waste_bank/features/offers/create_offer_page.dart';
 import 'package:waste_bank/features/profile/binding.dart';
 import 'package:waste_bank/features/profile/page.dart';
 import 'package:waste_bank/features/support/binding.dart';
@@ -41,6 +43,11 @@ class AppPages {
       name: Routes.PROFILE,
       page: () => const ProfilePage(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: Routes.CREATE_OFFER,
+      page: () => const CreateOfferPage(),
+      binding: OfferBinding(),
     ),
     GetPage(
       name: Routes.NOTIFICATIONS,
